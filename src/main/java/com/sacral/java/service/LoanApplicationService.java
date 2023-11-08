@@ -1,8 +1,11 @@
 package com.sacral.java.service;
 
 import com.sacral.java.repository.LoanApplicationRepository;
+import com.sacral.java.model.LoanApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LoanApplicationService {
@@ -14,58 +17,71 @@ public class LoanApplicationService {
         this.loanApplicationRepository = loanApplicationRepository;
     }
 
-    public String verifyDocument(Long customerId) {
-        if (loanApplicationRepository.isDocumentVerified(customerId)) {
-            return "Document verification successful. Eligible for banking services.";
-        } else {
-            return "Document verification incomplete. Not eligible for banking services.";
-        }
+    public int getNumberOfApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getNumberOfApplicationsByCustomerId(customerId);
     }
 
-    public String evaluateCredit(Long customerId) {
-        if (loanApplicationRepository.isEligibleForHighCreditLimit(customerId)) {
-            return "Congratulations! You are eligible for a credit score with a high limit.";
-        } else if (loanApplicationRepository.isEligibleForModerateCreditLimit(customerId)) {
-            return "You are eligible for a credit score with a moderate limit.";
-        } else {
-            return "Sorry, you are not eligible for a credit score.";
-        }
+    public int getNumberOfApprovedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getNumberOfApprovedApplicationsByCustomerId(customerId);
     }
 
-    public String evaluateDisbursement(Long customerId) {
-        if (loanApplicationRepository.isVehicleAssessmentPassed(customerId)) {
-            double disbursedAmount = loanApplicationRepository.getDisbursedAmount(customerId);
-            return "Vehicle assessment passed. Disbursed Amount: $" + disbursedAmount;
-        } else {
-            return "Vehicle assessment failed. Loan amount cannot exceed vehicle value.";
-        }
+    public int getNumberOfRejectedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getNumberOfRejectedApplicationsByCustomerId(customerId);
     }
 
-    public String evaluatePayment(Long customerId) {
-        if (loanApplicationRepository.isPaymentApproved(customerId)) {
-            return "Payment approved.";
-        } else {
-            return "Payment approval required.";
-        }
+    public int getNumberOfPendingApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getNumberOfPendingApplicationsByCustomerId(customerId);
     }
 
-    public String disburseLoan(Long customerId) {
-        if (loanApplicationRepository.isVendorInfoVerified(customerId) && loanApplicationRepository.isFundsAvailable(customerId) && loanApplicationRepository.isPaymentApproved(customerId)) {
-            double disbursedAmount = loanApplicationRepository.getDisbursedAmount(customerId);
-            return "Disbursement successful. Vendor: " + getVendorName(customerId) + ", Payment Amount: $" + disbursedAmount;
-        } else if (!loanApplicationRepository.isVendorInfoVerified(customerId)) {
-            return "Invalid vendor information.";
-        } else if (!loanApplicationRepository.isFundsAvailable(customerId)) {
-            return "Insufficient funds for disbursement.";
-        } else if (!loanApplicationRepository.isPaymentApproved(customerId)) {
-            return "Payment approval required.";
-        } else {
-            return "Disbursement failed.";
-        }
+    public List<LoanApplication> getApprovedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getApprovedApplicationsByCustomerId(customerId);
     }
 
-    private String getVendorName(Long customerId) {
-        // Get vendor name from external system based on customerId
-        return "Vendor Name";
+    public List<LoanApplication> getRejectedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getRejectedApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getPendingApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getPendingApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getEligibleApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getEligibleApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getHighCreditLimitApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getHighCreditLimitApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getModerateCreditLimitApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getModerateCreditLimitApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getVehicleAssessmentPassedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getVehicleAssessmentPassedApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getVehicleAssessmentFailedApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getVehicleAssessmentFailedApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getApprovedPaymentsByCustomerId(long customerId) {
+        return loanApplicationRepository.getApprovedPaymentsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getSuccessfulDisbursementsByCustomerId(long customerId) {
+        return loanApplicationRepository.getSuccessfulDisbursementsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getInvalidVendorInfoApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getInvalidVendorInfoApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getInsufficientFundsApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getInsufficientFundsApplicationsByCustomerId(customerId);
+    }
+
+    public List<LoanApplication> getPendingPaymentApprovalApplicationsByCustomerId(long customerId) {
+        return loanApplicationRepository.getPendingPaymentApprovalApplicationsByCustomerId(customerId);
     }
 }
