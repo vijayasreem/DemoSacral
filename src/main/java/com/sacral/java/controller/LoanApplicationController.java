@@ -4,9 +4,11 @@ import com.sacral.java.service.LoanApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/loan")
 public class LoanApplicationController {
 
     private final LoanApplicationService loanApplicationService;
@@ -16,26 +18,28 @@ public class LoanApplicationController {
         this.loanApplicationService = loanApplicationService;
     }
 
-    @GetMapping("/verifyDocuments/{identity}/{address}")
-    public String verifyDocuments(@PathVariable String identity, @PathVariable String address) {
-        return loanApplicationService.verifyDocuments(identity, address);
+    @GetMapping("/document/verify/{customerId}")
+    public String verifyDocument(@PathVariable Long customerId) {
+        return loanApplicationService.verifyDocument(customerId);
     }
 
-    @GetMapping("/evaluateCreditworthiness/{annualIncome}/{creditScore}")
-    public String evaluateCreditworthiness(@PathVariable double annualIncome, @PathVariable int creditScore) {
-        return loanApplicationService.evaluateCreditworthiness(annualIncome, creditScore);
+    @GetMapping("/credit/evaluate/{customerId}")
+    public String evaluateCredit(@PathVariable Long customerId) {
+        return loanApplicationService.evaluateCredit(customerId);
     }
 
-    @GetMapping("/disburseLoan/{id}")
-    public String disburseLoan(@PathVariable Long id) {
-        return loanApplicationService.disburseLoan(id);
+    @GetMapping("/disbursement/evaluate/{customerId}")
+    public String evaluateDisbursement(@PathVariable Long customerId) {
+        return loanApplicationService.evaluateDisbursement(customerId);
     }
 
-    @GetMapping("/approvePayment/{id}")
-    public String approvePayment(@PathVariable Long id) {
-        return loanApplicationService.approvePayment(id);
+    @GetMapping("/payment/evaluate/{customerId}")
+    public String evaluatePayment(@PathVariable Long customerId) {
+        return loanApplicationService.evaluatePayment(customerId);
     }
 
-    // Add more endpoints and mappings for additional loan application methods
-
+    @GetMapping("/disburse/{customerId}")
+    public String disburseLoan(@PathVariable Long customerId) {
+        return loanApplicationService.disburseLoan(customerId);
+    }
 }

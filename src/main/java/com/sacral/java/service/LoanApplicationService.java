@@ -14,62 +14,58 @@ public class LoanApplicationService {
         this.loanApplicationRepository = loanApplicationRepository;
     }
 
-    public String verifyDocuments(String identity, String address) {
-        String greetingMessage = "Welcome to the Document Verification App!";
-        
-        boolean identityVerified = verifyIdentity(identity);
-        boolean addressVerified = verifyAddress(address);
-        
-        if (identityVerified && addressVerified) {
-            return greetingMessage + "\nCongratulations! You are eligible for banking services.";
+    public String verifyDocument(Long customerId) {
+        if (loanApplicationRepository.isDocumentVerified(customerId)) {
+            return "Document verification successful. Eligible for banking services.";
         } else {
-            return greetingMessage + "\nDocument verification is incomplete. You are not eligible for banking services.";
+            return "Document verification incomplete. Not eligible for banking services.";
         }
     }
-    
-    private boolean verifyIdentity(String identity) {
-        // Implement logic to verify identity using provided input
-        // Return true if identity is verified, false otherwise
-    }
-    
-    private boolean verifyAddress(String address) {
-        // Implement logic to verify address using provided input
-        // Return true if address is verified, false otherwise
-    }
-    
-    public String evaluateCreditworthiness(double annualIncome, int creditScore) {
-        String message = "";
-        
-        if (annualIncome >= 30000 && creditScore >= 700) {
-            message = "Congratulations! You are eligible for a credit score with a high limit.";
-        } else if (annualIncome >= 20000 && creditScore >= 600) {
-            message = "You are eligible for a credit score with a moderate limit.";
-        }
-        
-        return message;
-    }
-    
-    public String disburseLoan(Long id) {
-        double vehicleAssessmentValue = loanApplicationRepository.getVehicleAssessmentValueById(id);
-        double disbursedAmount = loanApplicationRepository.getDisbursedAmountById(id);
-        
-        if (disbursedAmount <= vehicleAssessmentValue) {
-            return "Vehicle assessment passed.\nDisbursed Amount: $" + disbursedAmount;
+
+    public String evaluateCredit(Long customerId) {
+        if (loanApplicationRepository.isEligibleForHighCreditLimit(customerId)) {
+            return "Congratulations! You are eligible for a credit score with a high limit.";
+        } else if (loanApplicationRepository.isEligibleForModerateCreditLimit(customerId)) {
+            return "You are eligible for a credit score with a moderate limit.";
         } else {
-            return "Vehicle assessment failed.\nLoan amount cannot exceed vehicle value.";
+            return "Sorry, you are not eligible for a credit score.";
         }
     }
-    
-    public String approvePayment(Long id) {
-        double paymentAmount = loanApplicationRepository.getPaymentAmountById(id);
-        
-        if (paymentAmount <= 1000.0) {
+
+    public String evaluateDisbursement(Long customerId) {
+        if (loanApplicationRepository.isVehicleAssessmentPassed(customerId)) {
+            double disbursedAmount = loanApplicationRepository.getDisbursedAmount(customerId);
+            return "Vehicle assessment passed. Disbursed Amount: $" + disbursedAmount;
+        } else {
+            return "Vehicle assessment failed. Loan amount cannot exceed vehicle value.";
+        }
+    }
+
+    public String evaluatePayment(Long customerId) {
+        if (loanApplicationRepository.isPaymentApproved(customerId)) {
             return "Payment approved.";
         } else {
-            return "Payment not approved. Please review payment amount.";
+            return "Payment approval required.";
         }
     }
-    
-    // Add more methods and logic as needed for the loan application process
 
+    public String disburseLoan(Long customerId) {
+        if (loanApplicationRepository.isVendorInfoVerified(customerId) && loanApplicationRepository.isFundsAvailable(customerId) && loanApplicationRepository.isPaymentApproved(customerId)) {
+            double disbursedAmount = loanApplicationRepository.getDisbursedAmount(customerId);
+            return "Disbursement successful. Vendor: " + getVendorName(customerId) + ", Payment Amount: $" + disbursedAmount;
+        } else if (!loanApplicationRepository.isVendorInfoVerified(customerId)) {
+            return "Invalid vendor information.";
+        } else if (!loanApplicationRepository.isFundsAvailable(customerId)) {
+            return "Insufficient funds for disbursement.";
+        } else if (!loanApplicationRepository.isPaymentApproved(customerId)) {
+            return "Payment approval required.";
+        } else {
+            return "Disbursement failed.";
+        }
+    }
+
+    private String getVendorName(Long customerId) {
+        // Get vendor name from external system based on customerId
+        return "Vendor Name";
+    }
 }

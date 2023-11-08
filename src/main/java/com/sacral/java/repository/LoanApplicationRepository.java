@@ -9,27 +9,33 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Long> {
 
-    @Query("SELECT COUNT(l) > 0 FROM LoanApplication l WHERE l.identityVerified = true AND l.addressVerified = true")
-    boolean isEligibleForBankingServices();
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId AND l.documentVerified = true")
+    boolean isDocumentVerified(Long customerId);
 
-    @Query("SELECT COUNT(l) > 0 FROM LoanApplication l WHERE l.annualIncome >= 30000 AND l.creditScore >= 700")
-    boolean isEligibleForHighLimitCreditScore();
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId AND l.income >= 30000 AND l.creditScore >= 700")
+    boolean isEligibleForHighCreditLimit(Long customerId);
 
-    @Query("SELECT COUNT(l) > 0 FROM LoanApplication l WHERE l.annualIncome >= 20000 AND l.creditScore >= 600")
-    boolean isEligibleForModerateLimitCreditScore();
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId AND l.income >= 20000 AND l.creditScore >= 600")
+    boolean isEligibleForModerateCreditLimit(Long customerId);
 
-    @Query("SELECT l.vehicleAssessmentValue FROM LoanApplication l WHERE l.id = :id")
-    double getVehicleAssessmentValueById(Long id);
+    @Query("SELECT l.vehicleAssessmentValue FROM LoanApplication l WHERE l.customerId = :customerId")
+    double getVehicleAssessmentValue(Long customerId);
 
-    @Query("SELECT l.disbursedAmount <= l.vehicleAssessmentValue FROM LoanApplication l WHERE l.id = :id")
-    boolean isVehicleAssessmentPassed(Long id);
+    @Query("SELECT CASE WHEN l.disbursedAmount <= l.vehicleAssessmentValue THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId")
+    boolean isVehicleAssessmentPassed(Long customerId);
 
-    @Query("SELECT l.disbursedAmount FROM LoanApplication l WHERE l.id = :id")
-    double getDisbursedAmountById(Long id);
+    @Query("SELECT l.disbursedAmount FROM LoanApplication l WHERE l.customerId = :customerId")
+    double getDisbursedAmount(Long customerId);
 
-    @Query("SELECT l.paymentAmount <= 1000.0 FROM LoanApplication l WHERE l.id = :id")
-    boolean isPaymentApproved(Long id);
+    @Query("SELECT CASE WHEN l.disbursedAmount <= l.vehicleAssessmentValue THEN 'Vehicle assessment passed. Disbursed Amount: $' || l.disbursedAmount ELSE 'Vehicle assessment failed. Loan amount cannot exceed vehicle value.' END FROM LoanApplication l WHERE l.customerId = :customerId")
+    String getDisbursementStatus(Long customerId);
 
-    // Add more methods and queries as needed for the loan application process
+    @Query("SELECT CASE WHEN l.paymentAmount <= 1000.0 THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId")
+    boolean isPaymentApproved(Long customerId);
 
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId AND l.vendorVerified = true")
+    boolean isVendorInfoVerified(Long customerId);
+
+    @Query("SELECT CASE WHEN l.fundsAvailable >= l.paymentAmount THEN true ELSE false END FROM LoanApplication l WHERE l.customerId = :customerId")
+    boolean isFundsAvailable(Long customerId);
 }
