@@ -1,87 +1,85 @@
-package com.sacral.java.service;
-
-import com.sacral.java.repository.LoanApplicationRepository;
-import com.sacral.java.model.LoanApplication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-
+ 
+import java.util.Optional;
+ 
+import com.sacral.java.entity.LoanApplication;
+import com.sacral.java.repository.LoanApplicationRepository;
+ 
 @Service
 public class LoanApplicationService {
-
+ 
     private final LoanApplicationRepository loanApplicationRepository;
-
-    @Autowired
+ 
     public LoanApplicationService(LoanApplicationRepository loanApplicationRepository) {
         this.loanApplicationRepository = loanApplicationRepository;
     }
-
-    public int getNumberOfApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getNumberOfApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByCustomerInfo(String customerInfo) {
+        return loanApplicationRepository.findByCustomerInfo(customerInfo);
     }
-
-    public int getNumberOfApprovedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getNumberOfApprovedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByLoanDetails(String loanDetails) {
+        return loanApplicationRepository.findByLoanDetails(loanDetails);
     }
-
-    public int getNumberOfRejectedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getNumberOfRejectedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByCreditHistory(String creditHistory) {
+        return loanApplicationRepository.findByCreditHistory(creditHistory);
     }
-
-    public int getNumberOfPendingApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getNumberOfPendingApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByProofOfIncome(String proofOfIncome) {
+        return loanApplicationRepository.findByProofOfIncome(proofOfIncome);
     }
-
-    public List<LoanApplication> getApprovedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getApprovedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByEmploymentDetails(String employmentDetails) {
+        return loanApplicationRepository.findByEmploymentDetails(employmentDetails);
     }
-
-    public List<LoanApplication> getRejectedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getRejectedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByCreditCheck(String creditCheck) {
+        return loanApplicationRepository.findByCreditCheck(creditCheck);
     }
-
-    public List<LoanApplication> getPendingApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getPendingApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByPreQualifiedAmount(String preQualifiedAmount) {
+        return loanApplicationRepository.findByPreQualifiedAmount(preQualifiedAmount);
     }
-
-    public List<LoanApplication> getEligibleApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getEligibleApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByPreQualifiedInterestRate(String preQualifiedInterestRate) {
+        return loanApplicationRepository.findByPreQualifiedInterestRate(preQualifiedInterestRate);
     }
-
-    public List<LoanApplication> getHighCreditLimitApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getHighCreditLimitApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByApprovedAmount(String approvedAmount) {
+        return loanApplicationRepository.findByApprovedAmount(approvedAmount);
     }
-
-    public List<LoanApplication> getModerateCreditLimitApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getModerateCreditLimitApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByApprovedInterestRate(String approvedInterestRate) {
+        return loanApplicationRepository.findByApprovedInterestRate(approvedInterestRate);
     }
-
-    public List<LoanApplication> getVehicleAssessmentPassedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getVehicleAssessmentPassedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByRepaymentPeriod(String repaymentPeriod) {
+        return loanApplicationRepository.findByRepaymentPeriod(repaymentPeriod);
     }
-
-    public List<LoanApplication> getVehicleAssessmentFailedApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getVehicleAssessmentFailedApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByAssessmentValue(String assessmentValue) {
+        return loanApplicationRepository.findByAssessmentValue(assessmentValue);
     }
-
-    public List<LoanApplication> getApprovedPaymentsByCustomerId(long customerId) {
-        return loanApplicationRepository.getApprovedPaymentsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByLoanOffer(String loanOffer) {
+        return loanApplicationRepository.findByLoanOffer(loanOffer);
     }
-
-    public List<LoanApplication> getSuccessfulDisbursementsByCustomerId(long customerId) {
-        return loanApplicationRepository.getSuccessfulDisbursementsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByAcceptance(String acceptance) {
+        return loanApplicationRepository.findByAcceptance(acceptance);
     }
-
-    public List<LoanApplication> getInvalidVendorInfoApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getInvalidVendorInfoApplicationsByCustomerId(customerId);
+ 
+    public Optional<LoanApplication> findByDisburseAmount(String disburseAmount) {
+        return loanApplicationRepository.findByDisburseAmount(disburseAmount);
     }
-
-    public List<LoanApplication> getInsufficientFundsApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getInsufficientFundsApplicationsByCustomerId(customerId);
+ 
+    public LoanApplication saveApplication(LoanApplication loanApplication) {
+        return loanApplicationRepository.save(loanApplication);
     }
-
-    public List<LoanApplication> getPendingPaymentApprovalApplicationsByCustomerId(long customerId) {
-        return loanApplicationRepository.getPendingPaymentApprovalApplicationsByCustomerId(customerId);
+ 
+    public void deleteApplication(Long id) {
+        loanApplicationRepository.deleteById(id);
     }
+ 
 }

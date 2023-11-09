@@ -1,62 +1,52 @@
-
-package com.sacral.java.repository;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-import com.sacral.java.model.LoanApplication;
 
-@Repository
+import com.sacral.java.entity.LoanApplication;
+
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Long> {
+ 
+    @Query("SELECT l FROM LoanApplication l WHERE l.customerInfo = ?1")
+    LoanApplication findByCustomerInfo(String customerInfo);
 
-    @Query("SELECT COUNT(l) FROM LoanApplication l WHERE l.customerId = ?1")
-    int getNumberOfApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.loanDetails = ?1")
+    LoanApplication findByLoanDetails(String loanDetails);
 
-    @Query("SELECT COUNT(l) FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'APPROVED'")
-    int getNumberOfApprovedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.creditHistory = ?1")
+    LoanApplication findByCreditHistory(String creditHistory);
 
-    @Query("SELECT COUNT(l) FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'REJECTED'")
-    int getNumberOfRejectedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.proofOfIncome = ?1")
+    LoanApplication findByProofOfIncome(String proofOfIncome);
 
-    @Query("SELECT COUNT(l) FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'PENDING'")
-    int getNumberOfPendingApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.employmentDetails = ?1")
+    LoanApplication findByEmploymentDetails(String employmentDetails);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'APPROVED'")
-    List<LoanApplication> getApprovedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.creditCheck = ?1")
+    LoanApplication findByCreditCheck(String creditCheck);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'REJECTED'")
-    List<LoanApplication> getRejectedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.preQualifiedAmount = ?1")
+    LoanApplication findByPreQualifiedAmount(String preQualifiedAmount);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.status = 'PENDING'")
-    List<LoanApplication> getPendingApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.preQualifiedInterestRate = ?1")
+    LoanApplication findByPreQualifiedInterestRate(String preQualifiedInterestRate);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.documentVerified = true AND l.addressVerified = true")
-    List<LoanApplication> getEligibleApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.approvedAmount = ?1")
+    LoanApplication findByApprovedAmount(String approvedAmount);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.annualIncome >= 30000 AND l.creditScore >= 700")
-    List<LoanApplication> getHighCreditLimitApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.approvedInterestRate = ?1")
+    LoanApplication findByApprovedInterestRate(String approvedInterestRate);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.annualIncome >= 20000 AND l.creditScore >= 600")
-    List<LoanApplication> getModerateCreditLimitApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.repaymentPeriod = ?1")
+    LoanApplication findByRepaymentPeriod(String repaymentPeriod);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.disbursedAmount <= l.vehicleAssessmentValue")
-    List<LoanApplication> getVehicleAssessmentPassedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.assessmentValue = ?1")
+    LoanApplication findByAssessmentValue(String assessmentValue);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.disbursedAmount > l.vehicleAssessmentValue")
-    List<LoanApplication> getVehicleAssessmentFailedApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.loanOffer = ?1")
+    LoanApplication findByLoanOffer(String loanOffer);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.paymentAmount <= 1000.0")
-    List<LoanApplication> getApprovedPaymentsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.acceptance = ?1")
+    LoanApplication findByAcceptance(String acceptance);
 
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.vendorInfoVerified = true AND l.fundsAvailable = true AND l.paymentApproval = true")
-    List<LoanApplication> getSuccessfulDisbursementsByCustomerId(long customerId);
-
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.vendorInfoVerified = false")
-    List<LoanApplication> getInvalidVendorInfoApplicationsByCustomerId(long customerId);
-
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.fundsAvailable = false")
-    List<LoanApplication> getInsufficientFundsApplicationsByCustomerId(long customerId);
-
-    @Query("SELECT l FROM LoanApplication l WHERE l.customerId = ?1 AND l.paymentApproval = false")
-    List<LoanApplication> getPendingPaymentApprovalApplicationsByCustomerId(long customerId);
+    @Query("SELECT l FROM LoanApplication l WHERE l.disburseAmount = ?1")
+    LoanApplication findByDisburseAmount(String disburseAmount);
 }

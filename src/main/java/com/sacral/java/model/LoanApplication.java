@@ -1,133 +1,158 @@
 package com.sacral.java.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class LoanApplication {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private long customerId;
-    private String status;
-    private boolean documentVerified;
-    private boolean addressVerified;
-    private int annualIncome;
-    private int creditScore;
-    private double disbursedAmount;
-    private double vehicleAssessmentValue;
-    private double paymentAmount;
-    private boolean vendorInfoVerified;
-    private boolean fundsAvailable;
-    private boolean paymentApproval;
-    
-    // Getters and Setters
-    
+    private String customerInfo;
+    private String loanDetails;
+    private String creditHistory;
+    private String proofOfIncome;
+    private String employmentDetails;
+    private String creditCheck;
+    private String preQualifiedAmount;
+    private String preQualifiedInterestRate;
+    private String approvedAmount;
+    private String approvedInterestRate;
+    private String repaymentPeriod;
+    private String assessmentValue;
+    private String loanOffer;
+    private String acceptance;
+    private String disburseAmount;
+
+    public LoanApplication() {
+    }
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public long getCustomerId() {
-        return customerId;
+
+    public String getCustomerInfo() {
+        return customerInfo;
     }
-    
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+
+    public void setCustomerInfo(String customerInfo) {
+        this.customerInfo = customerInfo;
     }
-    
-    public String getStatus() {
-        return status;
+
+    public String getLoanDetails() {
+        return loanDetails;
     }
-    
-    public void setStatus(String status) {
-        this.status = status;
+
+    public void setLoanDetails(String loanDetails) {
+        this.loanDetails = loanDetails;
     }
-    
-    public boolean isDocumentVerified() {
-        return documentVerified;
+
+    public String getCreditHistory() {
+        return creditHistory;
     }
-    
-    public void setDocumentVerified(boolean documentVerified) {
-        this.documentVerified = documentVerified;
+
+    public void setCreditHistory(String creditHistory) {
+        this.creditHistory = creditHistory;
     }
-    
-    public boolean isAddressVerified() {
-        return addressVerified;
+
+    public String getProofOfIncome() {
+        return proofOfIncome;
     }
-    
-    public void setAddressVerified(boolean addressVerified) {
-        this.addressVerified = addressVerified;
+
+    public void setProofOfIncome(String proofOfIncome) {
+        this.proofOfIncome = proofOfIncome;
     }
-    
-    public int getAnnualIncome() {
-        return annualIncome;
+
+    public String getEmploymentDetails() {
+        return employmentDetails;
     }
-    
-    public void setAnnualIncome(int annualIncome) {
-        this.annualIncome = annualIncome;
+
+    public void setEmploymentDetails(String employmentDetails) {
+        this.employmentDetails = employmentDetails;
     }
-    
-    public int getCreditScore() {
-        return creditScore;
+
+    public String getCreditCheck() {
+        return creditCheck;
     }
-    
-    public void setCreditScore(int creditScore) {
-        this.creditScore = creditScore;
+
+    public void setCreditCheck(String creditCheck) {
+        this.creditCheck = creditCheck;
     }
-    
-    public double getDisbursedAmount() {
-        return disbursedAmount;
+
+    public String getPreQualifiedAmount() {
+        return preQualifiedAmount;
     }
-    
-    public void setDisbursedAmount(double disbursedAmount) {
-        this.disbursedAmount = disbursedAmount;
+
+    public void setPreQualifiedAmount(String preQualifiedAmount) {
+        this.preQualifiedAmount = preQualifiedAmount;
     }
-    
-    public double getVehicleAssessmentValue() {
-        return vehicleAssessmentValue;
+
+    public String getPreQualifiedInterestRate() {
+        return preQualifiedInterestRate;
     }
-    
-    public void setVehicleAssessmentValue(double vehicleAssessmentValue) {
-        this.vehicleAssessmentValue = vehicleAssessmentValue;
+
+    public void setPreQualifiedInterestRate(String preQualifiedInterestRate) {
+        this.preQualifiedInterestRate = preQualifiedInterestRate;
     }
-    
-    public double getPaymentAmount() {
-        return paymentAmount;
+
+    public String getApprovedAmount() {
+        return approvedAmount;
     }
-    
-    public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
+
+    public void setApprovedAmount(String approvedAmount) {
+        this.approvedAmount = approvedAmount;
     }
-    
-    public boolean isVendorInfoVerified() {
-        return vendorInfoVerified;
+
+    public String getApprovedInterestRate() {
+        return approvedInterestRate;
     }
-    
-    public void setVendorInfoVerified(boolean vendorInfoVerified) {
-        this.vendorInfoVerified = vendorInfoVerified;
+
+    public void setApprovedInterestRate(String approvedInterestRate) {
+        this.approvedInterestRate = approvedInterestRate;
     }
-    
-    public boolean isFundsAvailable() {
-        return fundsAvailable;
+
+    public String getRepaymentPeriod() {
+        return repaymentPeriod;
     }
-    
-    public void setFundsAvailable(boolean fundsAvailable) {
-        this.fundsAvailable = fundsAvailable;
+
+    public void setRepaymentPeriod(String repaymentPeriod) {
+        this.repaymentPeriod = repaymentPeriod;
     }
-    
-    public boolean isPaymentApproval() {
-        return paymentApproval;
+
+    public String getAssessmentValue() {
+        return assessmentValue;
     }
-    
-    public void setPaymentApproval(boolean paymentApproval) {
-        this.paymentApproval = paymentApproval;
+
+    public void setAssessmentValue(String assessmentValue) {
+        this.assessmentValue = assessmentValue;
     }
+
+    public String getLoanOffer() {
+        return loanOffer;
+    }
+
+    public void setLoanOffer(String loanOffer) {
+        this.loanOffer = loanOffer;
+    }
+
+    public String getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(String acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public String getDisburseAmount() {
+        return disburseAmount;
+    }
+
+    public void setDisburseAmount(String disburseAmount) {
+        this.disburseAmount = disburseAmount;
+    }
+
 }
