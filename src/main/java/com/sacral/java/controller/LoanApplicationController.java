@@ -1,26 +1,33 @@
 package com.sacral.java.controller;
 
+import com.sacral.java.service.LoanApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sacral.java.entity.LoanApplication;
-import com.sacral.java.service.LoanApplicationService;
+import java.util.Scanner;
 
 @RestController
-@RequestMapping("/loan-applications")
 public class LoanApplicationController {
-	
-	@Autowired
-	LoanApplicationService loanApplicationService;
-	
-	@PostMapping
-	public ResponseEntity<LoanApplication> createLoanApplication(@RequestBody LoanApplication loanApplication) {
-		LoanApplication savedLoanApplication = loanApplicationService.saveApplication(loanApplication);
-		return new ResponseEntity<>(savedLoanApplication, HttpStatus.CREATED);
-	}
+
+    private final LoanApplicationService loanApplicationService;
+
+    @Autowired
+    public LoanApplicationController(LoanApplicationService loanApplicationService) {
+        this.loanApplicationService = loanApplicationService;
+    }
+
+    @GetMapping("/verifyDocuments")
+    public String verifyDocuments() {
+        loanApplicationService.verifyDocuments();
+        return "Document verification completed.";
+    }
+
+    @GetMapping("/evaluateCredit")
+    public String evaluateCredit() {
+        loanApplicationService.evaluateCredit();
+        return "Credit evaluation completed.";
+    }
+
+    // Add other business methods here
 }

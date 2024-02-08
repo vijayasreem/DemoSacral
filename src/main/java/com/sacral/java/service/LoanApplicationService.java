@@ -1,85 +1,66 @@
+package com.sacral.java.service;
+
+import com.sacral.java.repository.UserRepository;
+import com.sacral.java.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
-import java.util.Optional;
- 
-import com.sacral.java.entity.LoanApplication;
-import com.sacral.java.repository.LoanApplicationRepository;
- 
+
+import java.util.Scanner;
+
 @Service
 public class LoanApplicationService {
- 
-    private final LoanApplicationRepository loanApplicationRepository;
- 
-    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository) {
-        this.loanApplicationRepository = loanApplicationRepository;
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public LoanApplicationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
- 
-    public Optional<LoanApplication> findByCustomerInfo(String customerInfo) {
-        return loanApplicationRepository.findByCustomerInfo(customerInfo);
+
+    public void verifyDocuments() {
+        System.out.println("Welcome to the Document Verification App!");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter your identity verification status (yes/no): ");
+        String identityVerificationStatus = scanner.nextLine();
+
+        System.out.println("Please enter your address verification status (yes/no): ");
+        String addressVerificationStatus = scanner.nextLine();
+
+        boolean identityVerified = identityVerificationStatus.equalsIgnoreCase("yes");
+        boolean addressVerified = addressVerificationStatus.equalsIgnoreCase("yes");
+
+        if (identityVerified && addressVerified) {
+            System.out.println("Congratulations! You are eligible for banking services.");
+        } else {
+            System.out.println("Document verification is incomplete. You are not eligible for banking services.");
+        }
+
+        scanner.close();
     }
- 
-    public Optional<LoanApplication> findByLoanDetails(String loanDetails) {
-        return loanApplicationRepository.findByLoanDetails(loanDetails);
+
+    public void evaluateCredit() {
+        System.out.println("Welcome to the Credit Evaluation App!");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter your annual income: ");
+        double annualIncome = scanner.nextDouble();
+
+        System.out.println("Please enter your credit score: ");
+        int creditScore = scanner.nextInt();
+
+        if (annualIncome >= 30000 && creditScore >= 700) {
+            System.out.println("Congratulations! You are eligible for a credit score with a high limit.");
+        } else if (annualIncome >= 20000 && creditScore >= 600) {
+            System.out.println("You are eligible for a credit score with a moderate limit.");
+        } else {
+            System.out.println("Sorry, you are not eligible for a credit score at this time.");
+        }
+
+        scanner.close();
     }
- 
-    public Optional<LoanApplication> findByCreditHistory(String creditHistory) {
-        return loanApplicationRepository.findByCreditHistory(creditHistory);
-    }
- 
-    public Optional<LoanApplication> findByProofOfIncome(String proofOfIncome) {
-        return loanApplicationRepository.findByProofOfIncome(proofOfIncome);
-    }
- 
-    public Optional<LoanApplication> findByEmploymentDetails(String employmentDetails) {
-        return loanApplicationRepository.findByEmploymentDetails(employmentDetails);
-    }
- 
-    public Optional<LoanApplication> findByCreditCheck(String creditCheck) {
-        return loanApplicationRepository.findByCreditCheck(creditCheck);
-    }
- 
-    public Optional<LoanApplication> findByPreQualifiedAmount(String preQualifiedAmount) {
-        return loanApplicationRepository.findByPreQualifiedAmount(preQualifiedAmount);
-    }
- 
-    public Optional<LoanApplication> findByPreQualifiedInterestRate(String preQualifiedInterestRate) {
-        return loanApplicationRepository.findByPreQualifiedInterestRate(preQualifiedInterestRate);
-    }
- 
-    public Optional<LoanApplication> findByApprovedAmount(String approvedAmount) {
-        return loanApplicationRepository.findByApprovedAmount(approvedAmount);
-    }
- 
-    public Optional<LoanApplication> findByApprovedInterestRate(String approvedInterestRate) {
-        return loanApplicationRepository.findByApprovedInterestRate(approvedInterestRate);
-    }
- 
-    public Optional<LoanApplication> findByRepaymentPeriod(String repaymentPeriod) {
-        return loanApplicationRepository.findByRepaymentPeriod(repaymentPeriod);
-    }
- 
-    public Optional<LoanApplication> findByAssessmentValue(String assessmentValue) {
-        return loanApplicationRepository.findByAssessmentValue(assessmentValue);
-    }
- 
-    public Optional<LoanApplication> findByLoanOffer(String loanOffer) {
-        return loanApplicationRepository.findByLoanOffer(loanOffer);
-    }
- 
-    public Optional<LoanApplication> findByAcceptance(String acceptance) {
-        return loanApplicationRepository.findByAcceptance(acceptance);
-    }
- 
-    public Optional<LoanApplication> findByDisburseAmount(String disburseAmount) {
-        return loanApplicationRepository.findByDisburseAmount(disburseAmount);
-    }
- 
-    public LoanApplication saveApplication(LoanApplication loanApplication) {
-        return loanApplicationRepository.save(loanApplication);
-    }
- 
-    public void deleteApplication(Long id) {
-        loanApplicationRepository.deleteById(id);
-    }
- 
+
+    // Add other business methods here
 }
